@@ -28,11 +28,11 @@ do
         then 
             echo "i=$i and lbCommand=$lbCommand"
             export schema=$i
-            liquibase flow
+            liquibase flow --flow-file=liquibase.flowfile3.yaml
         fi
     else
         echo "i=$i and lbCommand=$lbCommand"
         export schema=$i
-        liquibase flow
+        liquibase flow --flow-file=liquibase.flowfile3.yaml
     fi
 done
