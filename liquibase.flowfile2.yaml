@@ -1,66 +1,44 @@
-##########           LIQUIBASE FLOWFILE                ##########
-##########  learn more http://docs.liquibase.com/flow  ##########
-
-## Note: Any command which fails in any stage below result in the command stopping, and endStage being run.
-## A flow file can have one or more stages, each with multiple "actions", 
-## or your flow file can have multiple stages with fewer actions in each stage.
-
-# setup DATETIME on Linux as: 
-#   export DATETIME=`date "+%Y-%m-%d_%H:%M"`
-#   export lbCommand=update
-#   export lbCommandArgs="""
-#   exprot targetSchema="${schema}"
-
 include:
-  envNamespace: "${ENVIRONMENT}/${ENVIRONMENT}.yaml"
+ envNamespace: "${ENVIRONMENT}/${ENVIRONMENT}.yaml"
 
 globalVariables:
-  dbUrl: "jdbc:postgresql://localhost:5432/postgres?currentSchema=${envNamespace.SCHEMA}"
-  USERNAME: "${envNamespace.USERNAME}"
-  PASSWORD: "${envNamespace.PASSWORD}"
+ dbUrl: "jdbc:postgresql://localhost:5432/postgres?currentSchema=${envNamespace.SCHEMA}"
+ USERNAME: "${envNamespace.USERNAME}"
+ PASSWORD: "${envNamespace.PASSWORD}"
 
 stages:
-  Validation:
-    actions: 
-      - type: shell
-        command: |
-          echo "dbUrl=${dbUrl}"
-          echo "USERNAME=${USERNAME}"
-          echo "PASSWORD=${PASSWORD}"
+ Validation:
+   actions:
+     - type: shell
+       command: |
+         echo "dbUrl=${dbUrl}"
+         echo "USERNAME=${USERNAME}"
+         echo "PASSWORD=${PASSWORD}"
 
-  # eachSchema:
-  #   actions:
-  #     - type: shell
-  #       command: echo "Switching to ${schema}" && cd ${schema} && pwd 
-  #     - type: liquibase
-  #       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
-  #       command: checks run
-  #       cmdArgs: {checks-scope: changelog}
-  #     - type: liquibase
-  #       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
-  #       command: status
-  #       cmdArgs: {verbose: true}
-  #     - type: liquibase
-  #       if: "${lbCommand} == update"
-  #       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
-  #       command: update
-  #     - type: liquibase
-  #       if: "${lbCommand} == rollbackOneUpdate"
-  #       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
-  #       command: rollbackOneUpdate
-  #       cmdArgs: {force: true}
-  #     - type: liquibase
-  #       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
-  #       command: history
+ Run Checks:
+   actions:
+     - type: liquibase
+       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
+       command: checks run
+       cmdArgs: {checks-scope: changelog}
 
+ Status Database:
+   actions:
+     - type: liquibase
+       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
+       command: status
 
-## The endStage ALWAYS RUNS. 
-## So put actions here which you desire to perform whether previous stages' actions succeed or fail.
-## If you do not want any actions to ALWAYS RUN, simply delete the endStage from your flow file.
+ Update Database:
+   actions:
+     - type: liquibase
+       if: "${lbCommand} == update"
+       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
+       command: update
+
+## If you do not want any actions to ALWAYS RUN,
+##   simply delete the endStage from your flow file.
 
 endStage:
-  actions:
-    - type: liquibase
-      command: history
-    # - type: liquibase
-    #   command: dropAll
+ actions:
+   - type: liquibase
+     command: history

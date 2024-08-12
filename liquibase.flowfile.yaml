@@ -1,41 +1,23 @@
-include:
- envNamespace: "${ENVIRONMENT}/${ENVIRONMENT}.yaml"
-
-globalVariables:
- dbUrl: "jdbc:postgresql://localhost:5432/postgres?currentSchema=${envNamespace.SCHEMA}"
- USERNAME: "${envNamespace.USERNAME}"
- PASSWORD: "${envNamespace.PASSWORD}"
-
 stages:
- Validation:
-   actions:
-     - type: shell
-       command: |
-         echo "dbUrl=${dbUrl}"
-         echo "USERNAME=${USERNAME}"
-         echo "PASSWORD=${PASSWORD}"
 
- Run Checks:
+ ## The first stage
+ Run Quality Checks:  
    actions:
      - type: liquibase
-       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
        command: checks run
        cmdArgs: {checks-scope: changelog}
 
- Status Database:
-   actions:
-     - type: liquibase
-       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
-       command: status
-
+ ## The second stage of actions.
  Update Database:
    actions:
      - type: liquibase
-       if: "${lbCommand} == update"
-       globalArgs: { defaultsFile: "${schema}/liquibase.properties" }
+       command: update-sql
+
+     - type: liquibase
        command: update
 
-## If you do not want any actions to ALWAYS RUN,
+
+## If you do not want any actions to ALWAYS RUN, 
 ##   simply delete the endStage from your flow file.
 
 endStage:
