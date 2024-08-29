@@ -16,23 +16,23 @@
   </changeSet>
 
   <changeSet author="nvoxland" id="DB-1011" >
-    <sqlFile path="schema1/100_ddl/01_sales.sql"/>
+    <sqlFile path="UAT/schema1/100_ddl/01_sales.sql"/>
     <rollback>
-        <sqlFile path="schema1/100_ddl/01_sales-rollback.sql"/>
+        <sqlFile path="UAT/schema1/100_ddl/01_sales-rollback.sql"/>
     </rollback>
   </changeSet>
 
   <changeSet author="nvoxland" id="DB-1012">
-    <sqlFile path="schema1/100_ddl/02_employee.sql"/>
+    <sqlFile path="UAT/schema1/100_ddl/02_employee.sql"/>
     <rollback>
-        <sqlFile path="schema1/100_ddl/02_employee-rollback.sql"/>
+        <sqlFile path="UAT/schema1/100_ddl/02_employee-rollback.sql"/>
       </rollback>
   </changeSet>
 
   <changeSet author="nvoxland" id="DB-1013">
-    <sqlFile path="schema1/100_ddl/03_contractors.sql"/>
+    <sqlFile path="UAT/schema1/100_ddl/03_contractors.sql"/>
     <rollback>
-        <sqlFile path="schema1/100_ddl/03_contractors-rollback.sql"/>
+        <sqlFile path="UAT/schema1/100_ddl/03_contractors-rollback.sql"/>
       </rollback>
   </changeSet>
 

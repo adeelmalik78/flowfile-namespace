@@ -16,29 +16,29 @@
   </changeSet>
 
   <changeSet author="nvoxland" id="DB-1011" >
-    <sqlFile path="schema3/100_ddl/01_sales.sql"/>
+    <sqlFile path="DEV/schema3/100_ddl/01_sales.sql"/>
     <rollback>
-        <sqlFile path="schema3/100_ddl/01_sales-rollback.sql"/>
+        <sqlFile path="DEV/schema3/100_ddl/01_sales-rollback.sql"/>
     </rollback>
   </changeSet>
 
   <changeSet author="nvoxland" id="DB-1012">
-    <sqlFile path="schema3/100_ddl/02_employee.sql"/>
+    <sqlFile path="DEV/schema3/100_ddl/02_employee.sql"/>
     <rollback>
-        <sqlFile path="schema3/100_ddl/02_employee-rollback.sql"/>
+        <sqlFile path="DEV/schema3/100_ddl/02_employee-rollback.sql"/>
       </rollback>
   </changeSet>
 
   <changeSet author="nvoxland" id="DB-1013">
-    <sqlFile path="schema3/100_ddl/03_contractors.sql"/>
+    <sqlFile path="DEV/schema3/100_ddl/03_contractors.sql"/>
     <rollback>
-        <sqlFile path="schema3/100_ddl/03_contractors-rollback.sql"/>
+        <sqlFile path="DEV/schema3/100_ddl/03_contractors-rollback.sql"/>
       </rollback>
   </changeSet>
 
 <!-- 
-  <include file=schema3/100_ddl/03_contractors.sql>
-  <include file=schema3/100_ddl/01_sales.sql>
+  <include file=DEV/schema3/100_ddl/03_contractors.sql>
+  <include file=DEV/schema3/100_ddl/01_sales.sql>
 
   <includeAll path=main> -->
 
